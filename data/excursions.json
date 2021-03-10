@@ -1,4 +1,19 @@
 {
-    "excursions": [],
+    "excursions": [
+        {
+            "id": 1,
+            "title": "Ogrodzieniec",
+            "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet aliquam quam laboriosam quaerat temporibus dicta vitae maxime! Nemo, nobis veritatis?",
+            "adultPrice": "90",
+            "childPrice": "50"
+          },
+          {
+            "id": 2,
+            "title": "Ojców",
+            "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet aliquam quam laboriosam quaerat temporibus dicta vitae maxime! Nemo, nobis veritatis?",
+            "adultPrice": "50",
+            "childPrice": "30"
+          }
+    ],
     "orders": []
 }

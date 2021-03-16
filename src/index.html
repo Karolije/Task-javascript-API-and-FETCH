@@ -18,18 +18,18 @@
                 <form class="excursions__form">
                     <div class="excursions__field">
                         <label class="excursions__field-name">
-                            Dorosły: 99PLN x <input class="excursions__field-input" name="adults" />
+                            Dorosły: <span class=" price__for__an__adult">99</span>PLN x <input class="excursions__field-input" name="adults" autocomplete="off" />
                         </label>
                     </div>
                     <div class="excursions__field">
                         <label class="excursions__field-name">
-                            Dziecko: 50PLN x <input class="excursions__field-input" name="children" />
+                            Dziecko: <span class=" price__for__a__child">50</span>PLN x <input class="excursions__field-input" name="children" autocomplete="off" />
                         </label>
                     </div>
                     <div class="excursions__field excursions__field--submit">
                         <input 
                             class="excursions__field-input excursions__field-input--submit" 
-                            value="dodaj do zamówinia"
+                            value="dodaj do zamówienia"
                             type="submit"
                         />
                     </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="order__field">
                     <label class="order__field-name">
-                        Email <input class="order__field-input" name="email" />
+                        Email: <input class="order__field-input" name="email" />
                     </label>
                 </div>
                 <div class="order__field order__field--submit">
@@ -63,11 +63,11 @@
             <ul class="panel__summary summary">
                 <li class="summary__item summary__item--prototype">
                     <h3 class="summary__title">
-                        <span class="summary__name">Ogrodzieniec</span>
-                        <strong class="summay__total-price">199PLN</strong> 
+                        <span class="summary__name"></span>
+                        <strong class="summary__total-price"></strong><strong> PLN</strong>
                         <a href="" class="summary__btn-remove" title="usuń">X</a>
                     </h3>
-                    <p class="summary__prices">dorośli: 1 x 99PLN, dzieci: 2 x 50PLN</p>
+                    <p class="summary__prices"></p>
                 </li>
             </ul>
         </section>

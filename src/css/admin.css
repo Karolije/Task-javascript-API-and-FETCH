@@ -55,3 +55,7 @@ ul {
 .excursions__item--prototype {
     display: none;
 }
+
+[contenteditable=true], [contenteditable=true] > * {
+    border: 1px solid red;
+}

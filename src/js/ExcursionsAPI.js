@@ -22,6 +22,33 @@ class ExcursionsAPI {
         })
     }
 
+    add(data) {
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        };
+
+        return fetch(this.apiUrl, options).then(resp => {
+            if(resp.ok) { return resp.json(); }
+            return Promise.reject(resp);
+        })
+    }
+
+    update(data, id) {
+        const options = {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        };
+
+        return fetch(`${this.apiUrl}/${id}`, options).then(resp => {
+            if(resp.ok) { return resp.json(); }
+            return Promise.reject(resp);
+        })
+    }
+
 }
 
 export default ExcursionsAPI;

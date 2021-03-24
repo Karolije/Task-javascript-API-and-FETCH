@@ -41,7 +41,6 @@ function sumCost() {
 }
 
 function loadExcursions() {
-    fetch(apiUrl)
     api.load().then(data => {
         insertExcursions(data);
     })
@@ -153,24 +152,55 @@ const orderSubmit = document.querySelector('.order__field-submit');
 
 function order() {
     orderSubmit.addEventListener('click', e => {
-
-        if (panelExcursions.className.includes('all-right')) {
         e.preventDefault();
-        const orderData = e.target.parentElement.parentElement.parentElement;
+
+        const errors = checkData(e);
+        if (errors.length > 0) {
+            
+            panelOrder.appendChild(ulEl);
+            ulEl.textContent = '';
+            errors.forEach(function (errors) {
+    
+                const newLi = document.createElement('li');
+                newLi.innerText = errors;
+                ulEl.appendChild(newLi);
+    
+    
+            });
+    
+        } else {
+    
+            const errors = document.querySelector('.errors');
+            const orderTotalPrice = document.querySelector('.order__total-price-value');
+            if (errors) {
+                while (errors.children.length > 0) {
+                    errors.removeChild(errors.lastElementChild);
+    
+                }
+    
+            }
+
+            const orderData = e.target.parentElement.parentElement.parentElement;
         console.log(e.target.parentElement.parentElement.lastElementChild)
 
         const firstName = orderData.querySelector('[name="name"]');
         const email = orderData.querySelector('[name="email"]');
         const totalPrice = orderData.querySelector('.order__total-price-value');
 
+        const summaryExList = [];
+        const exList = document.querySelectorAll('.summary__item:not(.summary__item--prototype)');
+        exList.forEach(li => {
+            summaryExList.push({
+                title: li.querySelector('.summary__name').innerText,
+            })
+        })
+
 
         const data = {
             name: firstName.value,
             email: email.value,
             totalPrice: totalPrice.textContent,
-            summaryName: {
-                title: 'jak tu dać dane?'
-            }
+            summaryName: summaryExList,
             //  selectedTours
             //  numberOfAdults
             //  numberOfChildren
@@ -182,15 +212,23 @@ function order() {
             headers: { 'Content-Type': 'application/json' }
         };
         fetch(orderUrl, options)
-            .then(resp => console.log(resp))
+            .then(resp => {
+                console.log(resp);
+                alert("Dziękujemy za złożenie zamówienia o wartości " + orderTotalPrice.textContent + ". Wszelkie szczegóły zamówienia zostały wysłane na adres email: " + email.value);
+            })
             .catch(err => console.error(err))
+         
 
-    }
+            
+        }
+        
+
 
     })
 }
 
 orderSubmit.addEventListener('click', checkData);
+
 const panelOrder = document.querySelector('.panel__order');
 const ulEl = document.createElement('ul');
 ulEl.classList.add('errors');
@@ -201,7 +239,6 @@ function reload() {
 }
 
 function checkData(e) {
-    e.preventDefault();
     const errors = [];
     const nameAndSurname = document.querySelector('[name="name"]');
     const email = document.querySelector('[name="email"]');
@@ -222,32 +259,6 @@ function checkData(e) {
         e.preventDefault();
         errors.push('Wprowadź poprawny email');
     }
-    if (errors.length > 0) {
-        e.preventDefault();
-        panelOrder.appendChild(ulEl);
-        ulEl.textContent = '';
-        errors.forEach(function (errors) {
 
-            const newLi = document.createElement('li');
-            newLi.innerText = errors;
-            ulEl.appendChild(newLi);
-
-
-        });
-
-    } else {
-
-        const errors = document.querySelector('.errors');
-        const orderTotalPrice = document.querySelector('.order__total-price-value');
-        if (errors) {
-            while (errors.children.length > 0) {
-                errors.removeChild(errors.lastElementChild);
-
-            }
-
-        }
-        panelExcursions.classList.add('all-right');
-        alert("Dziękujemy za złożenie zamówienia o wartości " + orderTotalPrice.textContent + ". Wszelkie szczegóły zamówienia zostały wysłane na adres email: " + email.value);
-        reload();
-    }
+    return errors;
 }

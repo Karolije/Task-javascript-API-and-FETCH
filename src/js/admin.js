@@ -5,9 +5,6 @@ import ExcursionsAPI from './ExcursionsAPI';
 const api = new ExcursionsAPI();
 console.log('admin');
 
-
-const apiUrl = 'http://localhost:3000/excursions';
-
 document.addEventListener('DOMContentLoaded', init);
 
 const panelExcursions = document.querySelector('.panel__excursions');
@@ -20,7 +17,6 @@ function init() {
 }
 
 function loadExcursions() {
-    fetch(apiUrl)
     api.load().then(data => {
         insertExcursions(data);
     })
@@ -29,7 +25,13 @@ function loadExcursions() {
 
 
 function insertExcursions(excursionsArr) {
-    console.log(excursionsArr)
+    console.log(excursionsArr);
+
+    const all = document.querySelectorAll('.excursions__item:not(.excursions__item--prototype)');
+    all.forEach(item => {
+        item.parentElement.removeChild(item);
+    })
+
     excursionsArr.forEach(item => {
 
         const excursionsItemProto = document.querySelector('.excursions__item--prototype');
@@ -103,17 +105,10 @@ function addExcursion() {
 
 
         };
-        console.log(data)
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        };
+        
 
-        fetch(apiUrl, options)
-        api.load()
+        api.add(data)
             .then(data => {
-                reload();
                 loadExcursions(data);
             })
             .catch(err => console.error(err));
@@ -150,14 +145,8 @@ function updateExcursions() {
                     description: editList[1].textContent,
                     adultPrice: editList[2].textContent, childPrice: editList[3].textContent
                 }
-                console.log(editList)
-                const options = {
-                    method: 'PUT',
-                    body: JSON.stringify(data),
-                    headers: { 'Content-Type': 'application/json' }
-                };
-
-                fetch(`${apiUrl}/${id}`, options)
+                
+                api.update(data, id)
                     .then(resp => console.log(resp))
                     .catch(err => console.error(err))
                     .finally(() => {
